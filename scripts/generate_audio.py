@@ -46,7 +46,7 @@ small{{font-size:14px;line-height:1.8;display:block;color:#506b77}}li{{margin-bo
 <p><a href="../audio/{ident}.mp3" download>تنزيل التسجيل الصوتي · Download MP3</a></p>
 <section class="questions"><h2>أَسْئِلَةُ الاسْتِمَاعِ</h2><ol>{questions}</ol></section>
 <details><summary>إظهار النص المسموع · Show transcript</summary><p>{transcript}</p></details>
-<p><small>هذا صوت مولّد آليًا. يُراجع النطق والإيقاع قبل اعتماد الطبعة النهائية.</small></p>
+
 <p><a href="../index.html">العودة إلى مكتبة الاستماع</a></p></main></body></html>
 """
 
