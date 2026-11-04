@@ -1,0 +1,61 @@
+name: Build and publish Arabic listening
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'content/**'
+      - 'site/**'
+      - 'scripts/**'
+      - '.github/workflows/publish-listening.yml'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install speech library
+        run: python -m pip install 'edge-tts>=7,<9'
+      - name: Render spoken lesson to MP3
+        run: python scripts/generate_audio.py
+      - name: Validate output
+        run: |
+          test -s site/audio/unit-01.mp3
+          test -s site/listen/unit-01.html
+      - name: Save downloadable audio
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-01-mp3
+          path: site/audio/unit-01.mp3
+          if-no-files-found: error
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload static listening site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
