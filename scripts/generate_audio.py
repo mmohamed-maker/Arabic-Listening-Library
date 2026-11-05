@@ -98,7 +98,7 @@ async def main():
         raise SystemExit(f"No lesson matching {args.only}")
     for i, lesson in enumerate(selected,1):
         ident=lesson_id(lesson)
-        voice=VOICES[lesson["narrator"]]
+        voice=lesson.get("voice", VOICES[lesson["narrator"]])
         out=audio_dir/f"{ident}.mp3"
         print(f"[{i}/{len(selected)}] {ident}: {voice}",flush=True)
         await render_with_retries(lesson["text"],voice,out,args.rate)
