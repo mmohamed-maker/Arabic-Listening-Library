@@ -52,7 +52,7 @@ async def main():
         INDEX.write_text(index, encoding="utf-8")
     for attempt in range(1, 5):
         try:
-            await edge_tts.Communicate(text=transcript, voice="ar-SA-ZariyahNeural", rate="-20%").save(str(OUTPUT))
+            await edge_tts.Communicate(text=transcript, voice="ar-SA-HamedNeural", rate="-20%").save(str(OUTPUT))
             if OUTPUT.stat().st_size < 1000:
                 raise RuntimeError("Generated MP3 unexpectedly small")
             print(f"Grade 6 Makkah generated: {OUTPUT.stat().st_size} bytes")
