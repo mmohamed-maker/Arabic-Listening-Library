@@ -36,6 +36,8 @@ jobs:
         run: python scripts/generate_atallam_audio.py
       - name: Generate Grade 6 Makkah narration and listening page
         run: python scripts/generate_makkah_audio.py
+      - name: Generate Grade 6 Makkah Umrah listening MP3 and page
+        run: python scripts/generate_makkah_audio.py
       - name: Validate every audio file and player page
         run: |
           set -euo pipefail
@@ -43,6 +45,8 @@ jobs:
           test "$(find site/listen -name '*-unit-*.html' | wc -l)" -eq 18
           test -s site/audio/unit-01.mp3
           test -s site/listen/unit-01.html
+          test -s site/audio/makkah-grade6.mp3
+          test -s site/listen/makkah-grade6.html
           test -s site/audio/makkah-grade6.mp3
           test -s site/listen/makkah-grade6.html
       - name: Save downloadable audio
